@@ -7,6 +7,8 @@ class ElectricalComponent(ABC):
         self.name = name
         self.nodes = nodes #(node1, node2)
         self.value = value
+
+    # @abstractmethod gör så att alla subklasser är tvugna att implementera och skriva sin egen version
     @abstractmethod
     def apply(self, A, b, system_mAp, frequency):
         pass
@@ -28,12 +30,14 @@ class Resistor(ElectricalComponent):
         v2 = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]
 
+        #Resistance
         R = self.value
 
         # Ohm law
         A[i, v1] = 1
         A[i, v2] = -1
         A[i, i] = -R
+
     def get_current(self, solution, system_mAp):
         i = system_mAp[f"I_{self.name}"]
         return solution[i]
@@ -44,6 +48,7 @@ class VoltageSource(ElectricalComponent):
         v_m = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]
 
+        # V_plus - V_minus = voltage in voltage source
         A[i, v_p] = 1
         A[i, v_m] = -1
         b[i] = self.value
@@ -55,11 +60,12 @@ class Inductor(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
 
         w = 2*np.pi*frequency   # w = 2*pi*f omega
-        Z = 1j*w*self.value
+        Z = 1j*w*self.value # Z_L=jwL
         v1 = system_mAp[f"V{self.nodes[0]}"]
         v2 = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]
 
+        # Ohm
         A[i,v1] = 1
         A[i,v2] = -1
         A[i,i] = -Z
@@ -68,12 +74,13 @@ class Inductor(ElectricalComponent):
 
 class Capacitor(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
-        w = 2*np.pi*frequency
-        Z = 1/(1j*w*self.value)
+        w = 2*np.pi*frequency   # w = 2*pi*f
+        Z = 1/(1j*w*self.value) # Z_C = 1/(jwC)
         v1 = system_mAp[f"V{self.nodes[0]}"]
         v2 = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]
 
+        # OHMS
         A[i,v1] = 1
         A[i,v2] = -1
         A[i,i] = -Z

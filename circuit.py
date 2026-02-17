@@ -42,10 +42,7 @@ class Circuit:
 
         # Apply each component
         for comp in self.components:
-            comp.apply(self.system_matrix,
-                       self.system_rhs,
-                       self.system_map,
-                       self.frequency)
+            comp.apply(self.system_matrix, self.system_rhs, self.system_map, self.frequency)
 
         # Apply KCL
         for node in sorted(nodes):
@@ -56,11 +53,9 @@ class Circuit:
 
             for comp in self.components:
                 if comp.nodes[0] == node:
-                    self.system_matrix[row,
-                    self.system_map[f"I_{comp.name}"]] += 1
+                    self.system_matrix[row, self.system_map[f"I_{comp.name}"]] += 1
                 elif comp.nodes[1] == node:
-                    self.system_matrix[row,
-                    self.system_map[f"I_{comp.name}"]] -= 1
+                    self.system_matrix[row, self.system_map[f"I_{comp.name}"]] -= 1
     def __solve(self):
         self.solution = np.linalg.solve(self.system_matrix, self.system_rhs)
 

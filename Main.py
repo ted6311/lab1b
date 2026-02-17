@@ -5,26 +5,40 @@ from circuit import Circuit
 
 
 # 4.1 Resistive DC
-
 def part_41():
 
     c = Circuit()
 
-    c.add_component(VoltageSource("V1", (1, 0), 1))
-    c.add_component(VoltageSource("V2", (2, 3), 2))
-    c.add_component(Resistor("R1", (1, 2), 2000))
-    c.add_component(Resistor("R2", (3, 0), 3000))
-    c.add_component(Resistor("R3", (3, 0), 1000))
-    c.add_component(Ground(0))
+    V1 = VoltageSource("V1", (1, 0), 1)
+    V2 = VoltageSource("V2", (2, 3), 2)
+    R1 = Resistor("R1", (1, 2), 2000)
+    R2 = Resistor("R2", (3, 0), 3000)
+    R3 = Resistor("R3", (3, 0), 1000)
+    G  = Ground(0)
+
+    c.add_component(V1)
+    c.add_component(V2)
+    c.add_component(R1)
+    c.add_component(R2)
+    c.add_component(R3)
+    c.add_component(G)
 
     sol = c.run()
 
-    print("4.1 Solution:")
+    # Calculate required values
+    i0 = R2.get_current(sol, c.system_map)
+    i1 = R1.get_current(sol, c.system_map)
+    v0 = R3.get_voltage(sol, c.system_map)
+    print("\n--- 4.1 Results ---")
+    print("i0 =", i0, "A")
+    print("i1 =", i1, "A")
+    print("v0 =", v0, "V")
+    print(" \n 4.1 component values")
     for name, idx in c.system_map.items():
         print(name, "=", sol[idx])
 
 
-# 4.2 PT100 Sweep
+# 4.2 Sweep
 
 def part_42():
 
