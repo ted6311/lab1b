@@ -38,7 +38,7 @@ class Resistor(ElectricalComponent):
         i = system_mAp[f"I_{self.name}"]
         return solution[i]
 
-class Voltage(ElectricalComponent):
+class VoltageSource(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
         v_p = system_mAp[f"V{self.nodes[0]}"]
         v_m = system_mAp[f"V{self.nodes[1]}"]
