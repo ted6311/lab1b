@@ -34,8 +34,8 @@ def part_41():
     print("i1 =", i1, "A")
     print("v0 =", v0, "V")
     print(" \n 4.1 component values")
-    for name, idx in c.system_map.items():
-        print(name, "=", sol[idx])
+    for name, index in c.system_map.items():
+        print(name, "=", sol[index])
 
 
 # 4.2 Sweep

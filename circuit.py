@@ -24,15 +24,15 @@ class Circuit:
         for comp in self.components:
             nodes.update(comp.nodes)
 
-        idx = 0
+        i = 0
         for node in sorted(nodes):
-            self.system_map[f"V{node}"] = idx
-            idx += 1
+            self.system_map[f"V{node}"] = i
+            i += 1
 
         for comp in self.components:
             if not isinstance(comp, Ground):
-                self.system_map[f"I_{comp.name}"] = idx
-                idx += 1
+                self.system_map[f"I_{comp.name}"] = i
+                i += 1
 
         N = len(self.system_map)
 
