@@ -89,6 +89,7 @@ class Capacitor(ElectricalComponent):
 
 class Ground(ElectricalComponent):
     def __init__(self, node):
+        # Calling on Electrialcomponents method
         super().__init__("GND", (node, node), 0)
     def apply(self, A, b, system_mAp, frequency):
         v = system_mAp[f"V{self.nodes[0]}"]

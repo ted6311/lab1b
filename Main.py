@@ -73,7 +73,7 @@ def part_42():
 # 4.3 AC Sweep
 
 def part_43():
-
+    # 100 HZ to 10 MHz
     freqs = np.logspace(2, 7, 500)
     gain = []
     phase = []
