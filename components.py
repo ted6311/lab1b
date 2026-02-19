@@ -60,7 +60,7 @@ class Inductor(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
 
         w = 2*np.pi*frequency   # w = 2*pi*f omega
-        Z = 1j*w*self.value # Z_L=jwL
+        Z = 1j*w*self.value # Z_L=jwL, Impedance
         v1 = system_mAp[f"V{self.nodes[0]}"]
         v2 = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]
@@ -75,7 +75,7 @@ class Inductor(ElectricalComponent):
 class Capacitor(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
         w = 2*np.pi*frequency   # w = 2*pi*f
-        Z = 1/(1j*w*self.value) # Z_C = 1/(jwC)
+        Z = 1/(1j*w*self.value) # Z_C = 1/(jwC), impedance
         v1 = system_mAp[f"V{self.nodes[0]}"]
         v2 = system_mAp[f"V{self.nodes[1]}"]
         i = system_mAp[f"I_{self.name}"]

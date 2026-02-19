@@ -46,11 +46,14 @@ class Circuit:
 
         # Apply KCL
         for node in sorted(nodes):
+
+            # Skip KCL for Grounded node
             if node == 0:
                 continue
 
             row = self.system_map[f"V{node}"]
 
+            # Ingoing or outgoing Resistor/Source
             for comp in self.components:
                 if comp.nodes[0] == node:
                     self.system_matrix[row, self.system_map[f"I_{comp.name}"]] += 1

@@ -47,7 +47,7 @@ def part_42():
 
     for T in temps:
 
-        R3_value = 100 + 100*T*0.00385
+        R3_value = 100 + 100*T*0.00385    #pt100 tempkoefficient=alfa=0.00385
 
         c = Circuit()
 
