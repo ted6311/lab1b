@@ -9,6 +9,7 @@ class Circuit:
         self.system_matrix = None
         self. system_rhs = None
         self.solution = None
+
     def add_component(self, component):
         if component not in self.components:
             self.components.append(component)
@@ -59,6 +60,7 @@ class Circuit:
                     self.system_matrix[row, self.system_map[f"I_{comp.name}"]] += 1
                 elif comp.nodes[1] == node:
                     self.system_matrix[row, self.system_map[f"I_{comp.name}"]] -= 1
+
     def __solve(self):
         self.solution = np.linalg.solve(self.system_matrix, self.system_rhs)
 
@@ -66,5 +68,3 @@ class Circuit:
         self.__assemble_system()
         self.__solve()
         return self.solution
-
-

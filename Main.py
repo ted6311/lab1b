@@ -3,12 +3,13 @@ import matplotlib.pyplot as plt
 from components import *
 from circuit import Circuit
 
-
 # 4.1 Resistive DC
 def part_41():
-
+    # Skapar ett objekt av klassen Circuit
+    # Dvs att vi skapar en krets
     c = Circuit()
 
+    # Skapar komponenterna till kretsen
     V1 = VoltageSource("V1", (1, 0), 1)
     V2 = VoltageSource("V2", (2, 3), 2)
     R1 = Resistor("R1", (1, 2), 2000)
@@ -16,6 +17,7 @@ def part_41():
     R3 = Resistor("R3", (3, 0), 1000)
     G  = Ground(0)
 
+    # Lägger till komponenterna i kretsen
     c.add_component(V1)
     c.add_component(V2)
     c.add_component(R1)
@@ -23,12 +25,15 @@ def part_41():
     c.add_component(R3)
     c.add_component(G)
 
+    # Kör systemet/kretsen och får lösningen returnerat
     sol = c.run()
 
-    # Calculate required values
+    # Hämtar de begärda värdena
     i0 = R2.get_current(sol, c.system_map)
     i1 = R1.get_current(sol, c.system_map)
     v0 = R3.get_voltage(sol, c.system_map)
+
+    # Printa lösningen
     print("\n--- 4.1 Results ---")
     print("i0 =", i0, "A")
     print("i1 =", i1, "A")
@@ -39,18 +44,22 @@ def part_41():
 
 
 # 4.2 Sweep
-
 def part_42():
-
+    # Array av temperaturer mellan 0 C och 100 C
     temps = np.linspace(0, 100, 100)
+    # Lista som ska innehålla den begärda spänningen med avseende på temperaturen
     voltages = []
 
+    # Iterera för temperaturerna
     for T in temps:
-
+        # Beräknar R3 för denna iterations temperatur
         R3_value = 100 + 100*T*0.00385    #pt100 tempkoefficient=alfa=0.00385
 
+        # Skapar en krets
         c = Circuit()
 
+        # Skapar komponenterna till kretsen, och
+        # Lägger till komponenterna i kretsen
         c.add_component(VoltageSource("V1", (1, 0), 1))
         c.add_component(Resistor("R1", (1, 2), 100))
         c.add_component(Resistor("R2", (2, 0), 10))
@@ -58,11 +67,15 @@ def part_42():
         c.add_component(Resistor("R3", (2, 3), R3_value))
         c.add_component(Ground(0))
 
+        # Kör systemet/kretsen och får lösningen returnerat
         sol = c.run()
 
+        # Hämtar den begärda spänningen
         v0 = sol[c.system_map["V3"]]
+        # Lägg till spänningen i listan
         voltages.append(np.real(v0))
 
+    # Plottar spänningen med avseende på temperatur
     plt.plot(temps, voltages)
     plt.xlabel("Temperature (°C)")
     plt.ylabel("v0 (V)")
@@ -71,17 +84,20 @@ def part_42():
 
 
 # 4.3 AC Sweep
-
 def part_43():
-    # 100 HZ to 10 MHz
+    # Array av frekvenser mellan 100 Hz och 10 MHz
     freqs = np.logspace(2, 7, 500)
+    # Lista för gain och för phase
     gain = []
     phase = []
 
+    # Iterera för frekvenserna
     for f in freqs:
-
+        # Skapar kretsen
         c = Circuit(frequency=f)
 
+        # Skapar komponenterna till kretsen, och
+        # Lägger till komponenterna i kretsen
         c.add_component(VoltageSource("VAC", (1, 0), 1))
         c.add_component(Resistor("R1", (1, 2), 2200))
         c.add_component(Resistor("R2", (2, 0), 500))
@@ -89,13 +105,17 @@ def part_43():
         c.add_component(Capacitor("C1", (2, 0), 100e-9))
         c.add_component(Ground(0))
 
+        # Kör systemet/kretsen och får lösningen returnerat
         sol = c.run()
 
+        # Hämtar spänningen för att kunna beräkna gain och phase
         vout = sol[c.system_map["V2"]]
 
+        # Beräknar gain och phase samt lägger dessa i respektive lista
         gain.append(abs(vout))
         phase.append(np.angle(vout, deg=True))
 
+    # Plottar både gain och phase med avseende på frekvensen
     plt.subplot(2, 1, 1)
     plt.semilogx(freqs, gain)
     plt.ylabel("Gain")
@@ -108,6 +128,7 @@ def part_43():
     plt.show()
 
 
+# Startar "programmet" och kör uppgifterna 4.1, 4.2, och 4.3
 if __name__ == "__main__":
     part_41()
     part_42()

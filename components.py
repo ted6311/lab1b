@@ -1,14 +1,13 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
-
 class ElectricalComponent(ABC):
     def __init__(self, name: str, nodes: tuple, value: float):
         self.name = name
         self.nodes = nodes #(node1, node2)
         self.value = value
 
-    # @abstractmethod gör så att alla subklasser är tvugna att implementera och skriva sin egen version
+    # @abstractmethod gör så att alla subklasser är tvungna att implementera och skriva sin egen version
     @abstractmethod
     def apply(self, A, b, system_mAp, frequency):
         pass
@@ -18,11 +17,10 @@ class ElectricalComponent(ABC):
         v1 = solution[system_mAp[f"V{n1}"]]
         v2 = solution[system_mAp[f"V{n2}"]]
         return v1 - v2
+
     @abstractmethod
     def get_current(self, solution, system_mAp):
         pass
-
-
 
 class Resistor(ElectricalComponent):
     def apply(self, A, b, system_mAp, frequency):
