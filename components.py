@@ -132,10 +132,15 @@ class Ground(ElectricalComponent):
 
     # Jordens apply metod
     def apply(self, A, b, system_mAp, frequency):
+        # Hämtar identifierings indexet för spänningen
         v = system_mAp[f"V{self.nodes[0]}"]
+
+        # Vi visar att det finns en jord i en viss nod,
+        # vi kör [v,v] eftersom vi inte tagit med några strömmar i jorden
         A[v,v] = 1
-        b[v] = 0
+        b[v] = 0 # Spänningen är ju 0 för jorden
 
     # Jordens get_current metod
     def get_current(self, solution, system_mAp):
+        # Ingen ström i jorden
         return 0
