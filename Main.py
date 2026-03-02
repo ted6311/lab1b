@@ -42,7 +42,6 @@ def part_41():
     for name, index in c.system_map.items():
         print(name, "=", sol[index])
 
-
 # 4.2 Sweep
 def part_42():
     # Array av temperaturer mellan 0 C och 100 C
@@ -81,7 +80,6 @@ def part_42():
     plt.ylabel("v0 (V)")
     plt.title("PT100 Voltage vs Temperature")
     plt.show()
-
 
 # 4.3 AC Sweep
 def part_43():
@@ -126,7 +124,6 @@ def part_43():
     plt.xlabel("Frequency (Hz)")
 
     plt.show()
-
 
 # Startar "programmet" och kör uppgifterna 4.1, 4.2, och 4.3
 if __name__ == "__main__":
