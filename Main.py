@@ -23,6 +23,7 @@ def part_41():
     c.add_component(R3)
     c.add_component(G)
 
+
     sol = c.run()
 
     # Calculate required values

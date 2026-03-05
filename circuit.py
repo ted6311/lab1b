@@ -36,7 +36,7 @@ class Circuit:
 
         N = len(self.system_map)
 
-        # Store as attributes (REQUIRED by spec)
+        # Store as attributes
         self.system_matrix = np.zeros((N, N), dtype=complex)
         self.system_rhs = np.zeros(N, dtype=complex)
 
